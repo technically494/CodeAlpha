@@ -1,0 +1,137 @@
+<!-- {% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My E-Commerce Store</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+
+<body>
+
+    <h1>🛒 My E-Commerce Store</h1>
+
+    <h2>Our Products</h2>
+
+    {% for product in products %}
+
+        <div>
+            <h3>{{ product.name }}</h3>
+
+            <p>{{ product.description }}</p>
+
+            <strong>₹{{ product.price }}</strong>
+
+            <br><br>
+
+            <a href="{% url 'product_detail' product.id %}">
+            View Details
+            </a>
+            <br><br>
+
+             // <button>Add to Cart</button> 
+             <a href="{% url 'add_to_cart' product.id %}">
+    <button>Add to Cart</button>
+</a>
+        </div>
+
+        <hr>
+
+    {% empty %}
+
+        <p>No products available.</p>
+
+    {% endfor %}
+
+</body>
+</html> -->
+
+
+
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My E-Commerce Store</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <h1>🛒 My E-Commerce Store</h1>
+
+        <div>
+            <a href="/">Home</a>
+            <a href="{% url 'cart' %}">Cart 🛒</a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+
+    <!-- Products -->
+    <div class="container">
+
+        <h2>Our Products</h2>
+
+        <div class="product-grid">
+
+            {% for product in products %}
+
+                <div class="product-card">
+
+                    {% if product.image %}
+                        <img src="{{ product.image }}" alt="{{ product.name }}">
+                    {% else %}
+                        <div style="height: 180px;">
+                            🛍️
+                        </div>
+                    {% endif %}
+
+                    <h3>{{ product.name }}</h3>
+
+                    <p>{{ product.description }}</p>
+
+                    <div class="price">
+                        ₹{{ product.price }}
+                    </div>
+
+                    <a class="btn"
+                       href="{% url 'product_detail' product.id %}">
+                        View Details
+                    </a>
+
+                    <a class="btn cart-btn"
+                       href="{% url 'add_to_cart' product.id %}">
+                        Add to Cart
+                    </a>
+
+                </div>
+
+            {% empty %}
+
+                <p>No products available.</p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2026 My E-Commerce Store | All Rights Reserved</p>
+    </footer>
+
+</body>
+</html>

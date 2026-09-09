@@ -1,0 +1,161 @@
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <title>Shopping Cart</title>
+</head>
+
+<body>
+
+    <h1>🛒 Shopping Cart</h1>
+
+    {% if products %}
+
+        {% for item in products %}
+
+            <div>
+                <h3>{{ item.product.name }}</h3>
+
+                <p>Price: ₹{{ item.product.price }}</p>
+
+                <p>Quantity: {{ item.quantity }}</p>
+
+                <strong>
+                    Item Total: ₹{{ item.item_total }}
+                </strong>
+            </div>
+
+            <hr>
+
+        {% endfor %}
+
+        <h2>Total: ₹{{ total }}</h2>
+
+        //<button>Checkout</button> 
+         <a href="{% url 'checkout' %}">
+    <button>Checkout</button>
+</a>
+
+    {% else %}
+
+        <p>Your cart is empty.</p>
+
+    {% endif %}
+
+    <br><br>
+
+    <a href="/">← Continue Shopping</a>
+
+</body>
+
+</html> -->
+
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <h1>🛒 My E-Commerce Store</h1>
+
+        <div>
+            <a href="/">Home</a>
+            <a href="{% url 'cart' %}">Cart 🛒</a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+
+    <!-- Shopping Cart -->
+
+    <div class="container">
+
+        <h2>🛒 Shopping Cart</h2>
+
+        {% if products %}
+
+            <div class="product-grid">
+
+                {% for item in products %}
+
+                    <div class="product-card">
+
+                        {% if item.product.image %}
+                            <img src="{{ item.product.image }}"
+                                 alt="{{ item.product.name }}">
+                        {% else %}
+                            <div style="height: 180px; font-size: 70px; padding-top: 40px;">
+                                🛍️
+                            </div>
+                        {% endif %}
+
+                        <h3>{{ item.product.name }}</h3>
+
+                        <p>Price: ₹{{ item.product.price }}</p>
+
+                        <p>Quantity: {{ item.quantity }}</p>
+
+                        <div class="price">
+                            Item Total: ₹{{ item.item_total }}
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+            <div class="product-card" style="margin-top: 30px;">
+
+                <h2>Total: ₹{{ total }}</h2>
+
+                <a class="btn cart-btn"
+                   href="{% url 'checkout' %}">
+                    Proceed to Checkout
+                </a>
+
+            </div>
+
+        {% else %}
+
+            <div class="product-card">
+
+                <h3>Your cart is empty 🛒</h3>
+
+                <br>
+
+                <a class="btn"
+                   href="/">
+                    Continue Shopping
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Footer -->
+
+    <footer class="footer">
+        <p>© 2026 My E-Commerce Store | All Rights Reserved</p>
+    </footer>
+
+</body>
+</html>
